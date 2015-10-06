@@ -1,4 +1,4 @@
--- Database schema for tracking
+-- Database schema for tracking artwork of interest and the people who made it.
 
 CREATE TABLE people (
     id SERIAL PRIMARY KEY,
@@ -49,8 +49,8 @@ CREATE TABLE pieces (
 COMMENT ON TABLE pieces
 'Creative works we''re interested in.';
 
-COMMENT ON COLUMN pieces.name
-'This piece''s name.
+COMMENT ON COLUMN pieces.title
+'This piece''s title.
 
 Should arguably be nullable, so users can enter pieces whose titles they do ' ||
 'not know, as long as a description is provided.';
@@ -113,13 +113,13 @@ If this table has no rows for a piece, it has not been experienced.';
 COMMENT ON COLUMN experiences.start_date
 'The optional date the experience of the piece began.
 
-Some kinds of art can take days, weeks, or even months to get through, so the
-start date and the end date may vary widely.
+Some kinds of art can take days, weeks, or even months to get through, so the ' ||
+'start date and the end date may vary widely.
 
 Books are the most likely offenders.';
 
 COMMENT ON COLUMN experiences.date_error_margin
 'An optional record of the accuracy of the start/end fields.
 
-People do not always know exactly when something happened, so we let them say' ||
+People do not always know exactly when something happened, so we let them say ' ||
 'roughly how accurate they think the dates and times are.';
