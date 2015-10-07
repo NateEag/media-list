@@ -4,12 +4,12 @@ CREATE TABLE people (
     id SERIAL PRIMARY KEY,
     name VARCHAR(200) NOT NULL
 );
+
 -- TODO See if PostGres supports an inline comment syntax a la MySQL.
 -- I don't love much about MySQL but that was convenient.
-COMMENT ON TABLE people
-'Humans whose creative output might be interesting.';
+COMMENT ON TABLE people IS 'Humans whose creative output might be interesting.';
 
-COMMENT ON COLUMN people.name
+COMMENT ON COLUMN people.name IS
 'Full name, exactly as entered.';
 
 CREATE TABLE media (
@@ -17,10 +17,10 @@ CREATE TABLE media (
     name VARCHAR(200) NOT NULL
 );
 
-COMMENT ON TABLE media
+COMMENT ON TABLE media IS
 'List of creative media we''re interested in.';
 
-COMMENT ON COLUMN media.name
+COMMENT ON COLUMN media.name IS
 'This medium''s name - e.g., ''Book''.';
 
 -- Initial values for media types. Users can always add more, but this is the
@@ -46,19 +46,19 @@ CREATE TABLE pieces (
 );
 
 -- TODO Look for PostGres flycheck syntax checker.
-COMMENT ON TABLE pieces
+COMMENT ON TABLE pieces IS
 'Creative works we''re interested in.';
 
-COMMENT ON COLUMN pieces.title
+COMMENT ON COLUMN pieces.title IS
 'This piece''s title.
 
 Should arguably be nullable, so users can enter pieces whose titles they do ' ||
 'not know, as long as a description is provided.';
 
-COMMENT ON COLUMN pieces.subtitle
+COMMENT ON COLUMN pieces.subtitle IS
 'This piece''s (optional) subtitle.';
 
-COMMENT ON COLUMN pieces.description
+COMMENT ON COLUMN pieces.description IS
 'Notes on the piece, perhaps including why it is of interest to the user.';
 
 
@@ -72,10 +72,10 @@ CREATE TABLE makers (
     title VARCHAR(100) NOT NULL
 );
 
-COMMENT ON TABLE makers
+COMMENT ON TABLE makers IS
 'Links people to creative works they contributed to.';
 
-COMMENT ON COLUMN makers.title
+COMMENT ON COLUMN makers.title IS
 'Job title for the maker''s work on the piece.';
 
 -- Record of the times a piece has been experienced.
@@ -105,12 +105,12 @@ CREATE TABLE experiences (
     date_error_margin INTERVAL
 );
 
-COMMENT ON TABLE experiences
+COMMENT ON TABLE experiences IS
 'A record of how often pieces have been experienced.
 
 If this table has no rows for a piece, it has not been experienced.';
 
-COMMENT ON COLUMN experiences.start_date
+COMMENT ON COLUMN experiences.start_date IS
 'The optional date the experience of the piece began.
 
 Some kinds of art can take days, weeks, or even months to get through, so the ' ||
@@ -118,7 +118,7 @@ Some kinds of art can take days, weeks, or even months to get through, so the ' 
 
 Books are the most likely offenders.';
 
-COMMENT ON COLUMN experiences.date_error_margin
+COMMENT ON COLUMN experiences.date_error_margin IS
 'An optional record of the accuracy of the start/end fields.
 
 People do not always know exactly when something happened, so we let them say ' ||
