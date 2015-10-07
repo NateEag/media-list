@@ -26,15 +26,15 @@ COMMENT ON COLUMN media.name IS
 -- Initial values for media types. Users can always add more, but this is the
 -- default set.
 INSERT INTO media (name)
-VALUES ('Book',
-        'Poem',
-        'Film',
-        'Show',
-        'Play',
-        'Album',
-        'Song',
-        'Game',
-        'Video Game');
+VALUES ('Book'),
+       ('Poem'),
+       ('Film'),
+       ('Show'),
+       ('Play'),
+       ('Album'),
+       ('Song'),
+       ('Game'),
+       ('Video Game');
 
 -- Creative works we are interested in.
 CREATE TABLE pieces (
