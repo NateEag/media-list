@@ -7,7 +7,8 @@ CREATE TABLE people (
 
 -- TODO See if PostGres supports an inline comment syntax a la MySQL.
 -- I don't love much about MySQL but that was convenient.
-COMMENT ON TABLE people IS 'Humans whose creative output might be interesting.';
+COMMENT ON TABLE people IS
+'Humans whose creative output might be interesting.';
 
 COMMENT ON COLUMN people.name IS
 'Full name, exactly as entered.';
@@ -49,11 +50,15 @@ CREATE TABLE pieces (
 COMMENT ON TABLE pieces IS
 'Creative works we''re interested in.';
 
+-- TODO Suggest that || should be allowed in defining comments.
+-- As it stands, I would have to post-process my comments if I wanted a given
+-- paragraph without newlines. That's probably not a big deal, but it seems like
+-- an arbitrary limitation.
 COMMENT ON COLUMN pieces.title IS
 'This piece''s title.
 
-Should arguably be nullable, so users can enter pieces whose titles they do ' ||
-'not know, as long as a description is provided.';
+Should arguably be nullable, so users can enter pieces whose titles they do
+not know, as long as a description is provided.';
 
 COMMENT ON COLUMN pieces.subtitle IS
 'This piece''s (optional) subtitle.';
@@ -113,13 +118,15 @@ If this table has no rows for a piece, it has not been experienced.';
 COMMENT ON COLUMN experiences.start_date IS
 'The optional date the experience of the piece began.
 
-Some kinds of art can take days, weeks, or even months to get through, so the ' ||
-'start date and the end date may vary widely.
+Some kinds of art can take days, weeks, or even months to get through, so the
+start date and the end date may vary widely.
 
 Books are the most likely offenders.';
 
 COMMENT ON COLUMN experiences.date_error_margin IS
 'An optional record of the accuracy of the start/end fields.
 
-People do not always know exactly when something happened, so we let them say ' ||
-'roughly how accurate they think the dates and times are.';
+People do not always know exactly when something happened, so we let them say
+roughly how accurate they think the dates and times are.
+
+Should not be allowed unless start and end date exist?';
