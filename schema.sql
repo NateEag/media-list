@@ -86,26 +86,29 @@ COMMENT ON COLUMN makers.title IS
 -- Record of the times a piece has been experienced.
 -- No row in this table implies that it has not yet been experienced.
 --
--- TODO Is there a better name? 'viewings' suggests principally visual
--- experiences, while this table could contain events like listening to an album.
--- 'experiences' seems pretty vague.
+-- TODO Is there a better name? 'experiences' seems pretty vague.
+-- 'viewings' is the only other candidate I've thought of, but it suggests
+-- principally visual experiences, while this table could contain events like
+-- listening to an album.
 CREATE TABLE experiences (
     id SERIAL PRIMARY KEY,
     piece_id INTEGER NOT NULL REFERENCES pieces (id),
 
-    -- TODO Should the start/end fields be a single tstzrange field?
-    -- Would that make both ends required, and if so is that too restrictive?
+    -- FIXME Every one of these fields is nullable.
+    -- I don't love that, but for usability's sake in the UI, it seems
+    -- necessary. Often enough, you don't remember exactly when you did
+    -- something, and you don't want to bother figuring out - just let me check
+    -- the "saw it" button in the UI and move on.
 
     -- TODO Is there a cleaner way to make the time fields optional?
     -- Declaring them separately from the date feels odd, but with timestamp
     -- and friends, it seems like you couldn't know if the time portion was
     -- actually exact, entered sloppily, or an attempt to indicate that time is
     -- unknown.
-    start_date DATE,
-    start_time TIME,
+    experienced_during daterange,
 
-    end_date DATE,
-    end_time TIME,
+    start_time TIME WITH TIME ZONE,
+    end_time TIME WITH TIME ZONE,
 
     date_error_margin INTERVAL
 );
@@ -115,13 +118,23 @@ COMMENT ON TABLE experiences IS
 
 If this table has no rows for a piece, it has not been experienced.';
 
-COMMENT ON COLUMN experiences.start_date IS
-'The optional date the experience of the piece began.
+COMMENT ON COLUMN experiences.experienced_during IS
+'Optional date range over which the piece was experienced.
 
 Some kinds of art can take days, weeks, or even months to get through, so the
 start date and the end date may vary widely.
 
 Books are the most likely offenders.';
+
+COMMENT ON COLUMN experiences.start_time IS
+'Optional record of the time the experience began.
+
+If present, augments the experienced_during field.';
+
+COMMENT ON COLUMN experiences.end_time IS
+'Optional record of the time the experience ended.
+
+If present, augments the experienced_during field.';
 
 COMMENT ON COLUMN experiences.date_error_margin IS
 'An optional record of the accuracy of the start/end fields.
@@ -130,3 +143,7 @@ People do not always know exactly when something happened, so we let them say
 roughly how accurate they think the dates and times are.
 
 Should not be allowed unless start and end date exist?';
+
+-- TODO Add tables for managing users and API keys.
+
+-- TODO Add tables for tracking recommendations and appropriateness rankings.
